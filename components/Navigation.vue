@@ -13,6 +13,7 @@
             <NuxtLink class="nav-link " to="/prompt-of-the-day">Challange des Tages</NuxtLink>
 
             <NuxtLink class="nav-link " to="/gallery">Galerie</NuxtLink>
+            <NuxtLink class="nav-link " to="/calendar">Kalender</NuxtLink>
            <!-- <a class="nav-link" href="#">Fotos des Tages</a> -->
 
 
