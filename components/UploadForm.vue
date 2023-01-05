@@ -1,136 +1,119 @@
 <template>
+  <div
+    class="container bg-dark d-flex flex-column mt-5 mt-0-xl justify-content-center align-content-center flex-wrap flex-xl-nowrap p-5"
+  >
+    <h1>Foto hochladen</h1>
 
-  <div class="card  text-white bg-dark " style="width: 30rem;">
-    <div class="card-body">
+    <div class="flex-row mb-3">
+      <span> Name des Foto's </span>
+      <input
+        v-model="photo_name"
+        class="form-control text-white"
+        type="text"
+        name=""
+        id=""
+      />
+    </div>
 
+    <div class="flex-row mb-3">
+      <span> Challange des Tages </span>
+      <select class="form-select" aria-label="Default select example">
+        <option v-for="(prompt, index) in prompts" :selected="prompt.selected">
+          {{ prompt.prompt }}
+        </option>
+      </select>
+    </div>
 
-      <h4 class="card-title text-center mb-4">Foto hochladen</h4>
+    <div class="flex-row mb-3">
+      <span>Wähle ein Foto </span>
+      <input
+        ref="photo_file"
+        v-on:change="handleFileUpload()"
+        class="form-control text-white"
+        type="file"
+        id="formFile"
+      />
+    </div>
 
-
-      <div class="row mb-3">
-        <label for="inputName" class="col-sm-4 col-form-label">Name des Foto"s</label>
-        <div class="col-sm-8">
-          <input v-model="photo_name" type="text" class="form-control  text-white" id="inputName">
-        </div>
-      </div>
-
-      <!--
-      <div class="row mb-3">
-        <label for="inputName" class="col-sm-4 col-form-label">Challange</label>
-        <div class="col-sm-8">
-          <input v-model="challange_of_the_day_text" type="text" class="form-control text-white" id="inputName"
-                 disabled>
-        </div>
-      </div>
-
-      -->
-
-
-      <div class="row mb-3">
-        <label for="inputName" class="col-sm-4 col-form-label">Challange</label>
-        <div class="col-sm-8">
-          <select class="form-select" aria-label="Default select example">
-            <option selected>Open this select menu</option>
-            <option v-for="(prompt,index) in prompts">{{prompt.text}}</option>
-          </select>
-        </div>
-      </div>
-
-
-      <div class="row mb-5">
-        <label for="inputName" class="col-sm-4 col-form-label">Wähle ein Foto</label>
-        <div class="col-sm-8">
-          <input class="form-control text-white" type="file" id="formFile">
-        </div>
-      </div>
-
-
-      <div class="row mt-1">
-        <div class="col-sm-12">
-          <input v-on:click="tryUpload" type="button" class="form-control btn btn-dark" id="inputSend"
-                 value="Hochladen">
-        </div>
-      </div>
-
-
+    <div class="flex-row mb-3">
+      <input
+        v-on:click="tryUpload"
+        type="button"
+        class="form-control btn btn-dark"
+        id="inputSend"
+        value="Hochladen"
+      />
     </div>
   </div>
-
 </template>
 
-<script>
-export default {
-  name: "UploadForm",
-  data() {
-    return {
-      photo_name: "",
-      challange_of_the_day_text: "",
-      challange_of_the_day_id: "",
-      prompts: [],
-    }
-  },
-  created() {
-    // get current date
-    let currentDate = new Date();
-    let cDay = currentDate.getDate()
-    let cMonth = currentDate.getMonth() + 1
-    currentDate = `${cDay}.${cMonth}`;
+<script setup>
+import { pipelineBareFunction } from "@babel/types";
+import { ref } from "vue";
+import { default as helper } from "../utils/userHelper";
 
-    this.fetchPrompt(currentDate);
+const photo_name = ref("");
+const photo_file = ref(null);
+const prompts = ref("");
 
-    for (const date of this.lastThreeDates()) {
-      this.fetchPrompt(date);
-    }
-
-    console.log(this.prompts)
-  },
-  methods:
-      {
-        lastThreeDates: function () {
-          const today = new Date();
-          const dates = [];
-          for (let i = 1; i <= 3; i++) {
-            const date = new Date(today.getTime() - (i * 24 * 60 * 60 * 1000));
-            const day = date.getDate();
-            const month = date.getMonth() + 1;
-            dates.push(`${day}.${month}`);
-          }
-          return dates;
-        },
-        fetchPrompt: function (date) {
-          // create request url
-          let link = `https://pocket.lasseharm.space/api/collections/prompts/records?filter=(date='${date}')`;
-
-          fetch(link)
-              .then(response => response.json())
-              .then(json => {
-                    if (json.items.length === 0) {
-                      this.prompts.push(
-                          {
-                            id: null,
-                            text: "There is no prompt of the day 😭",
-                            date:date,
-                          }
-                      )
-                      return
-                    }
-
-                    //TODO pick random if there are more than one
-                    this.prompts.push(
-                        {
-                          id: json.items[0].id,
-                          text: json.items[0].prompt_text,
-                          date:json.items[0].date,
-                        }
-                    )
-                  }
-              )
-        },
-      }
-
+function filterData(data, date) {
+  const currDate = helper.getCurrentDate();
+  let value = data;
+  if (Date.parse(currDate) < Date.parse(date)) {
+    value = "???";
+  }
+  return value;
 }
+
+async function waitForData() {
+  const week = helper.getCurrentCalendarWeek();
+  const currDate = helper.getCurrentDate();
+
+  let tmpArr = [];
+
+  for (const i in week) {
+    let tmpPrompt = filterData(
+      await helper.getPromptOfTheDay(week[i].date),
+      week[i].date
+    );
+
+    if (tmpPrompt != "???" && tmpPrompt != "There is no prompt of the day 😭") {
+      tmpArr.push({
+        prompt: tmpPrompt,
+        date: week[i].date,
+        selected: currDate == week[i].date ? true : false,
+      });
+    }
+  }
+
+  prompts.value = tmpArr;
+}
+
+async function handleFileUpload() {
+  console.log("selected file", photo_file.value.files);
+}
+
+function tryUpload() {
+  const data = {
+    name: photo_name,
+    photo_file: photo_file,
+    user: "",
+    public: true,
+    prompt: "",
+  };
+
+  const response = fetch(helper.baseUrl + "/api/collections/photos/records", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/x-www-form-urlencoded",
+    },
+    body: JSON.stringify(data),
+  });
+}
+
+onMounted(() => {
+  waitForData();
+});
 </script>
 
-<style scoped>
-</style>
-
+<style scoped></style>

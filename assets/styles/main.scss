@@ -47,9 +47,10 @@ body
   background-color: $dark-bg;
   color: $light-text;
 
-  input, textarea {
+  input, textarea, select, option{
     background-color: $dark !important;
     border-color: gray  !important;
     border-width: 0.5px  !important;
+    color: $light-text !important;
   }
 }

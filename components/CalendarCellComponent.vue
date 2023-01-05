@@ -3,7 +3,7 @@
     class="c-cell flex-column d-flex flex-wrap justify-content-center align-content-center"
   >
     <div
-      class="foo d-flex flex-wrap justify-content-start align-content-center ms-2 mt-1"
+      class="foo d-flex flex-wrap justify-content-start align-content-center ms-3 mt-1"
     >
       {{ props.weekday }}
     </div>
