@@ -1,44 +1,45 @@
 <template>
+  <div
+    class="container bg-dark d-flex flex-column mt-5 mt-0-xl justify-content-center align-content-center flex-wrap flex-xl-nowrap p-5"
+  >
+    <h1>Login</h1>
 
-  <div class="card  text-white bg-dark " style="width: 30rem;">
-    <div class="card-body">
+    <div class="flex-row mb-3">
+      <span> Email </span>
+      <input
+        v-model="username"
+        class="form-control text-white"
+        type="text"
+        name=""
+        id=""
+      />
+    </div>
 
-      <section class="mb-4">
-        <h4 class="card-title text-center">Login</h4>
-      </section>
+    <div class="flex-row mb-3">
+      <span> Password </span>
+      <input
+        v-model="password"
+        class="form-control text-white"
+        type="password"
+        name=""
+        id=""
+      />
+    </div>
 
-      <section class="">
-        <div class="row mb-3">
-          <label for="inputEmail" class="col-sm-4 col-form-label">Email</label>
-          <div class="col-sm-8">
-            <input v-model="username" type="email" class="form-control  text-white" id="inputEmail" required>
-          </div>
-        </div>
+    <div class="flex-row mb-3 text-danger">
+      <label for="none" class="col-sm-12 col-form-label">{{ login_error }}</label>
+    </div>
 
-        <div class="row mb-3">
-          <label for="inputPassword" class="col-sm-4 col-form-label">Password</label>
-          <div class="col-sm-8">
-            <input v-model="password" type="password" class="form-control  text-white" id="inputPassword"
-                   required>
-          </div>
-        </div>
-
-        <div class="row mt-1 mb-1 text-danger">
-         <strong>
-           <label for="none" class="col-sm-12 col-form-label">{{ login_error }}</label>
-         </strong>
-        </div>
-
-        <div class="row mt-1">
-          <div class="col-sm-12">
-            <input v-on:click="tryLogin" type="button" class="form-control btn btn-dark" id="inputSend" value="Login">
-          </div>
-        </div>
-      </section>
-
+    <div class="flex-row mb-3">
+      <input
+        v-on:click="tryLogin"
+        type="button"
+        class="form-control btn btn-dark"
+        id="inputSend"
+        value="Login"
+      />
     </div>
   </div>
-
 </template>
 
 <script>
@@ -49,71 +50,61 @@ export default {
     return {
       username: "",
       password: "",
-      login_error: " "
-    }
+      login_error: " ",
+    };
   },
-  methods:
-      {
-        debug: function () {
-          console.log(this.username)
-          console.log(this.password)
+  methods: {
+    debug: function () {
+      console.log(this.username);
+      console.log(this.password);
+    },
+
+    tryLogin: function () {
+      this.login_error = " ";
+
+      let data = {
+        identity: this.username,
+        password: this.password,
+      };
+
+      fetch(link, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
         },
+        body: JSON.stringify(data),
+      })
+        .then((response) => response.json())
+        .then((json) => {
+          if (typeof json.code !== "undefined") {
+            switch (json.code) {
+              case 400:
+                this.login_error =
+                  "Deine Anmeldedaten waren leider falsch. Probiere es noch ein mal.";
+                break;
+              default:
+                console.log("Critical error! Please contact the site administrator");
+            }
 
-        tryLogin: function () {
+            return false;
+          }
 
-          this.login_error = " "
+          // store token in local storage or cookie
 
-          let data =
-              {
-                identity: this.username,
-                password: this.password
-              }
+          localStorage.setItem("auth_token", json.token);
 
-          fetch(link, {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(data)
-          })
-              .then(response => response.json())
-              .then(json => {
+          this.$router.push({ name: "index" });
 
-                if (typeof (json.code) !== 'undefined') {
-                  switch (json.code) {
-                    case 400:
-                      this.login_error = "Deine Anmeldedaten waren leider falsch. Probiere es noch ein mal."
-                      break;
-                    default:
-                      console.log("Critical error! Please contact the site administrator")
+          console.log(json);
+        });
 
-                  }
-
-                  return false
-
-                }
-
-                // store token in local storage or cookie
-
-                localStorage.setItem("auth_token", json.token)
-
-                this.$router.push({ name: 'index' })
-
-                console.log(json)
-              });
-
-
-          console.log("TODO Login ...")
-        }
-      }
-
-}
+      console.log("TODO Login ...");
+    },
+  },
+};
 </script>
 
 <style scoped>
-.card
-{
-
+.card {
 }
 </style>
-
