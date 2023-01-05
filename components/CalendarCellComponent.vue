@@ -2,41 +2,52 @@
   <div
     class="c-cell flex-column d-flex flex-wrap justify-content-center align-content-center"
   >
-    <div class="foo d-flex flex-wrap justify-content-start align-content-center">{{ props.weekday }}</div>
+    <div
+      class="foo d-flex flex-wrap justify-content-start align-content-center ms-2 mt-1"
+    >
+      {{ props.weekday }}
+    </div>
 
     <div
-      class="text-lg foo d-flex flex-wrap flex-grow-1 justify-content-center align-content-center"
+      class="text-lg foo d-flex flex-wrap flex-grow-1 justify-content-center align-content-center text-center"
     >
-    {{ props.date }}
+      {{ props.date }}
     </div>
     <div
-      class="foo flex-grow-1 d-flex flex-wrap flex-grow-1 justify-content-center align-content-center"
+      class="foo flex-grow-1 d-flex flex-wrap flex-grow-1 justify-content-center align-content-center text-center"
     >
-    {{ props.prompt }}
+      {{ prompt }}
     </div>
   </div>
 </template>
 
 <script setup>
 import { ref } from "vue";
+import { default as helper } from "../utils/userHelper";
 
-const props = defineProps(['weekday', 'date', 'prompt'])
+const props = defineProps(["weekday", "date", "prompt"]);
 
+const prompt = computed(() => {
+  return filterData();
+});
 
+function filterData() {
+  const currDate = helper.getCurrentDate();
+
+  let value = props.prompt;
+  if (Date.parse(currDate) < Date.parse(props.date)) {
+    value = "???";
+  }
+
+  return value;
+}
 </script>
 
 <style scoped>
-.bar {
-  min-width: 50vw;
-
-  min-height: 50px;
-  border: 1px brown solid;
-}
-
 .c-cell {
-  width: 150px;
-  height: 150px;
-  border: 1px green solid;
+  width: 200px;
+  height: 200px;
+  border: 1px #d7d7d7 solid;
 }
 
 .text-lg {
@@ -45,16 +56,9 @@ const props = defineProps(['weekday', 'date', 'prompt'])
 
 .foo {
   min-width: 100%;
+
   /*border: 1px rgb(255, 238, 0) solid;*/
 }
 </style>
 
-
-/*
-
-Add props for
-- Weekday
-- Date
-- Prompt
-
-*/
+/* Add props for - Weekday - Date - Prompt */

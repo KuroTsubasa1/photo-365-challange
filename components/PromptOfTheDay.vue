@@ -1,7 +1,7 @@
 <template>
   <div>
-    <h2>Das Thema des Tages lautet :</h2>
-    <h1 class="prompt-of-the-day">
+    <h2 class="text-center">Das Thema des Tages lautet :</h2>
+    <h1 class="prompt-of-the-day text-center">
       <strong>
         {{ prompt }}
       </strong>

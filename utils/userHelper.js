@@ -5,6 +5,17 @@ export default {
 
   promptErrorText: "There is no prompt of the day 😭",
 
+  getCurrentDate : function()
+  {
+    let curr = new Date();
+    curr =  this.fillDateWithZeros(
+      curr.getDate(),
+      curr.getMonth() + 1
+    );
+
+    return `${curr.day}.${curr.month}`
+  },
+
   getCurrentCalendarWeek: function (date) {
     const maxDays = 7;
     let weekObj = {};
@@ -14,19 +25,15 @@ export default {
 
     let curr = new Date(); // get current date
     let first = curr.getDate() - curr.getDay() + 1; // First day is the day of the month - the day of the week
-    let last = first + 6; // last day is the first day + 6
 
     for (let index = 0; index < maxDays; index++) {
       let loopDate = new Date(curr.setDate(first + index));
-      let day = "";
-      let month = "";
-
       let zeroDate = this.fillDateWithZeros(
-        loopDate.getDay(),
+        loopDate.getDate(),
         loopDate.getMonth() + 1
       );
 
-      weekObj = {
+      weekObj[index] = {
         weekday: loopDate.toLocaleDateString("de-de", { weekday: "short" }),
         date:
           zeroDate.day+
@@ -35,7 +42,7 @@ export default {
       };
     }
 
-    return [weekObj]
+    return weekObj
   },
 
   checkUserLoggedIn: function (token) {
