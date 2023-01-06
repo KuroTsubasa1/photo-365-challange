@@ -1,11 +1,11 @@
 <template>
-<PromptOfTheDay>
-</PromptOfTheDay>
+  <PromptOfTheDay>
+  </PromptOfTheDay>
 </template>
 
 <script>
 export default {
-  name:"PagePromptOfTheDay.vue"
+  name: "PagePromptOfTheDay.vue"
 }
 </script>
 

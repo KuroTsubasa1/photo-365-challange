@@ -14,7 +14,7 @@
 
             <NuxtLink class="nav-link " to="/gallery">Galerie</NuxtLink>
             <NuxtLink class="nav-link " to="/calendar">Kalender</NuxtLink>
-           <!-- <a class="nav-link" href="#">Fotos des Tages</a> -->
+            <!-- <a class="nav-link" href="#">Fotos des Tages</a> -->
 
 
             <NuxtLink class="nav-link " to="/upload-image">
@@ -30,14 +30,16 @@
 </template>
 
 <script>
+import AlertComponent from "~/components/AlertComponent.vue";
+
 export default {
-  name: "Navigation"
+  name: "Navigation",
+  components: {AlertComponent}
 }
 </script>
 
 <style scoped>
-.nav-link
-{
+.nav-link {
   /*
   margin-left: 5px;
   margin-right: 5px;

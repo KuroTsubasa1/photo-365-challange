@@ -1,5 +1,5 @@
 <template>
-Foo
+  Foo
 </template>
 
 <script>

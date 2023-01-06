@@ -1,20 +1,20 @@
 <template>
   <div
-    class="c-cell flex-column d-flex flex-wrap justify-content-center align-content-center"
+      class="c-cell flex-column d-flex flex-wrap justify-content-center align-content-center"
   >
     <div
-      class="foo d-flex flex-wrap justify-content-start align-content-center ms-3 mt-1"
+        class="foo d-flex flex-wrap justify-content-start align-content-center ms-3 mt-1"
     >
       {{ props.weekday }}
     </div>
 
     <div
-      class="text-lg foo d-flex flex-wrap flex-grow-1 justify-content-center align-content-center text-center"
+        class="text-lg foo d-flex flex-wrap flex-grow-1 justify-content-center align-content-center text-center"
     >
       {{ props.date }}
     </div>
     <div
-      class="foo flex-grow-1 d-flex flex-wrap flex-grow-1 justify-content-center align-content-center text-center"
+        class="foo flex-grow-1 d-flex flex-wrap flex-grow-1 justify-content-center align-content-center text-center"
     >
       {{ prompt }}
     </div>
@@ -22,8 +22,7 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
-import { default as helper } from "../utils/userHelper";
+import {default as helper} from "../utils/userHelper";
 
 const props = defineProps(["weekday", "date", "prompt"]);
 

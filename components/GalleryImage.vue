@@ -1,44 +1,96 @@
-0<template>
+0
+<template>
 
-  <div class="gallery-image" :style="image_path">
+  <div class="bo image-cell d-flex flex-column  text-dark">
+    <h6>
+      {{ image.name }}
+    </h6>
+    <div class="bo gallery-image" :style="image_path">
+
+    </div>
+    <div class="image-cell-tail d-flex flex-row">
+      <div class="d-flex flex-column flex-wrap">
+         <strong style="font-size: smaller" class="">
+           #{{prompt}}
+         </strong>
+        <div>
+          Von: {{username}}
+        </div>
+      </div>
+      <div class="d-flex flex-column flex-fill">
+        <div>
+          
+        </div>
+      </div>
+    </div>
 
   </div>
+
 
 </template>
 
 <script>
+import {computed} from "#imports";
+import {default as helper} from "../utils/userHelper"
+
 export default {
   name: "GalleryImage",
   data() {
     return {
-      image_path: "",
+      api_url: 'https://pocket.lasseharm.space/api/files/',
+      username: "Loading ...",
+      prompt: "Loading ...",
     }
   },
+  methods:
+      {
+        waitForData: async function()
+        {
+          const user =  await helper.getUserById(this.image.user)
+          const prompt = await helper.getPromptById(this.image.prompt)
+          this.username = user.username
+          this.prompt = prompt.prompt_text.toUpperCase()
+         
+        }
+      },
+  computed:
+      {
+        image_path() {
+          return "background-image:url('" +  this.api_url + this.image.collectionId + '/' + this.image.id + '/' + this.image.photo_file + "')"
+        },
+      },
   props: {
-    prop_image_path: String,
+    image: Object
   },
-  methods:{
-    compute_image_path: function ()
-    {
-     this.image_path =  "background-image:url('" + this.prop_image_path + "')"
-    }
-  },
-  created() {
-    this.compute_image_path()
-    console.log(this.prop_image_path)
-    console.log(this.image_path)
+  mounted() {
+    this.waitForData()
   }
 }
 
 </script>
 
 <style scoped>
-.gallery-image {
-  padding: 15px;
+.bo {
+  border-radius: 5px;
+  background-color: #FFF;
+  padding: 20px;
+  /* border: #212121 solid 2px; */
+
+}
+
+.image-cell {
   margin: 20px;
+}
+
+.image-cell-tail {
+  margin-top: 10px;
+  margin-bottom: 40px;
+}
+
+.gallery-image {
   /* border: #ce2127 solid 1px;*/
-  width: 320px;
-  height:  180px;
+  width: 250px;
+  height: 250px;
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;

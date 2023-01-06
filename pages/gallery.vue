@@ -1,9 +1,9 @@
 <template>
 
-    <gallery-image
-        v-for="(image,index) in images"
-        :prop_image_path="api_url + image.collectionId + '/' + image.id + '/' +  image.photo_file">
-    </gallery-image>
+  <gallery-image
+      v-for="(image,index) in images"
+      :image="image">
+  </gallery-image>
 
 </template>
 
@@ -28,7 +28,7 @@ export default {
   },
   methods:
       {
-        getImages : function () {
+        getImages: function () {
 
           let link = `https://pocket.lasseharm.space/api/collections/photos/records`;
 

@@ -8,7 +8,7 @@
 
 <script>
 export default {
-  name: "upload-image"
+  name: "upload-image",
 }
 </script>
 

@@ -29,9 +29,8 @@ export default {
 
     waitForData: async function()
     {
-      let foo = await helper.getPromptOfTheDay()
-      console.log(foo);
-      this.prompt = foo
+      const promptData = await helper.getPromptOfTheDay()
+      this.prompt = promptData.prompt
     },
   },
 };

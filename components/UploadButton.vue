@@ -2,7 +2,7 @@
 
   <nuxt-link>
     <button id="upload-button">
-        +
+      +
     </button>
   </nuxt-link>
 

@@ -1,6 +1,6 @@
 <template>
-<CalendarComponent>
-</CalendarComponent>
+  <CalendarComponent>
+  </CalendarComponent>
 </template>
 
 <script>

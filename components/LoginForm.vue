@@ -1,28 +1,28 @@
 <template>
   <div
-    class="container bg-dark d-flex flex-column mt-5 mt-0-xl justify-content-center align-content-center flex-wrap flex-xl-nowrap p-5"
+      class="container bg-dark d-flex flex-column mt-5 mt-0-xl justify-content-center align-content-center flex-wrap flex-xl-nowrap p-5"
   >
     <h1>Login</h1>
 
     <div class="flex-row mb-3">
       <span> Email </span>
       <input
-        v-model="username"
-        class="form-control text-white"
-        type="text"
-        name=""
-        id=""
+          v-model="username"
+          class="form-control text-white"
+          type="text"
+          name=""
+          id=""
       />
     </div>
 
     <div class="flex-row mb-3">
       <span> Password </span>
       <input
-        v-model="password"
-        class="form-control text-white"
-        type="password"
-        name=""
-        id=""
+          v-model="password"
+          class="form-control text-white"
+          type="password"
+          name=""
+          id=""
       />
     </div>
 
@@ -32,11 +32,11 @@
 
     <div class="flex-row mb-3">
       <input
-        v-on:click="tryLogin"
-        type="button"
-        class="form-control btn btn-dark"
-        id="inputSend"
-        value="Login"
+          v-on:click="tryLogin"
+          type="button"
+          class="form-control btn btn-dark"
+          id="inputSend"
+          value="Login"
       />
     </div>
   </div>
@@ -55,8 +55,6 @@ export default {
   },
   methods: {
     debug: function () {
-      console.log(this.username);
-      console.log(this.password);
     },
 
     tryLogin: function () {
@@ -74,29 +72,33 @@ export default {
         },
         body: JSON.stringify(data),
       })
-        .then((response) => response.json())
-        .then((json) => {
-          if (typeof json.code !== "undefined") {
-            switch (json.code) {
-              case 400:
-                this.login_error =
-                  "Deine Anmeldedaten waren leider falsch. Probiere es noch ein mal.";
-                break;
-              default:
-                console.log("Critical error! Please contact the site administrator");
+          .then((response) => response.json())
+          .then((json) => {
+            if (typeof json.code !== "undefined") {
+              switch (json.code) {
+                case 400:
+                  this.login_error =
+                      "Deine Anmeldedaten waren leider falsch. Probiere es noch ein mal.";
+                  break;
+                default:
+                  console.log("Critical error! Please contact the site administrator");
+              }
+
+              return false;
             }
 
-            return false;
-          }
+            console.log(json);
 
-          // store token in local storage or cookie
+            // store token in local storage or cookie
+            // TODO refactor to service worker 
+            localStorage.setItem("auth_token", json.token);
+            localStorage.setItem("auth_email", json.record.email);
+            localStorage.setItem("auth_username", json.record.username)
+            localStorage.setItem("auth_id", json.record.id)
+            this.$router.push({name: "index"});
 
-          localStorage.setItem("auth_token", json.token);
 
-          this.$router.push({ name: "index" });
-
-          console.log(json);
-        });
+          });
 
       console.log("TODO Login ...");
     },
