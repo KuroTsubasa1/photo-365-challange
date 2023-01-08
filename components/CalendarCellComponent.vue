@@ -34,7 +34,19 @@ function filterData() {
   const currDate = helper.getCurrentDate();
 
   let value = props.prompt;
-  if (Date.parse(currDate) < Date.parse(props.date)) {
+  let isFutureDate = false
+
+  if (Date.parse(currDate) < Date.parse(props.date))
+  {
+    isFutureDate = true
+  }
+
+  if (isNaN(Date.parse(props.date)))
+  {
+    isFutureDate = true
+  }
+
+  if (isFutureDate) {
     value = "???";
   }
 
