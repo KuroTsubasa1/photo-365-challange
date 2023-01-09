@@ -1,5 +1,6 @@
 export default {
     baseUrl: "https://pocket.lasseharm.space",
+    apiUrl : "/api/files/",
     verifyUserUrl: "/api/collections/users/confirm-verification",
     promptUrl: "/api/collections/prompts/records",
     getUserUrl: "/api/collections/users/records",
@@ -7,7 +8,17 @@ export default {
 
     promptErrorText: "There is no prompt of the day 😭",
     userErrorText: "No user found!",
-
+    
+    dateToIso8601Format: function (date)
+    {
+        // supported format YYYY-MM-DDTHH:mm:ss.sssZ
+        const dateParts = date.split('.')
+        
+        const year = new Date().getFullYear()
+        
+        return `${year}-${dateParts[1]}-${dateParts[0]}:00:00:00`
+    },
+    
     getPromptById: async function(id) {
 
         const filter = `?filter=(id='${id}')`

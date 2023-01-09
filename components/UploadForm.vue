@@ -62,7 +62,8 @@ function updatePromptId() {
 function filterData(data, date) {
   const currDate = helper.getCurrentDate();
   let value = data.prompt;
-  if (Date.parse(currDate) < Date.parse(date)) {
+  
+  if (Date.parse(helper.dateToIso8601Format(currDate)) < Date.parse(helper.dateToIso8601Format(date))) {
     value = "???";
   }
   data.prompt = value

@@ -3,7 +3,7 @@
     <nav class="navbar navbar-expand-lg  navbar-dark bg-dark">
       <div class="container-fluid">
         <NuxtLink class="navbar-brand" aria-current="page" to="/">365 Photo Challange 📷</NuxtLink>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
+        <button class="navbar-toggler float-end" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
                 aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
