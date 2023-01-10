@@ -175,6 +175,13 @@ export default {
             }
         }
         
+        if ( typeof  data.items[0].example_images === 'undefined' ||  data.items[0].example_images === null || typeof data.items[0].example_images.prompt_helper === 'undefined' )
+        {
+            data.items[0].example_images = {
+                prompt_helper : [],
+            }
+        }
+        
         return {
             prompt: data.items[0].prompt_text,
             id: data.items[0].id,
