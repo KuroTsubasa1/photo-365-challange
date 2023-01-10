@@ -1620,30 +1620,82 @@ function delay(milliseconds) {
     });
 }
 
-async function postData(url = '', data = {}) {
+async function postData(url = '', data = {}, mode = "update") {
+    
+    let fetch_init = 
+        {
+            mode: 'cors',
+            cache: 'no-cache',
+            credentials: 'same-origin',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            redirect: 'follow',
+            referrerPolicy: 'no-referrer',
+        }
+  
+    switch (mode)
+    {
+        case 'insert':
+        {
+            fetch_init.method = "POST"
+            break;
+        }
+        
+        case 'update':
+        {   
+            // build querystring to get record
+            let filter = `?filter=(date='${data.date}')`
+            fetch_init.method = "GET"
+            
+            // get record for the id
+            const response = await fetch(url+filter,fetch_init);
+            const json =  await response.json();
+            
+            // update url for specific record
+            url += `/${json.items[0].id}`
+            fetch_init.method = "PATCH"
+            break;
+        }
+        
+        default:
+        {
+            fetch_init.method = "POST"
+        }
+    }
+
+
+    fetch_init.body = JSON.stringify(data)
+    
     // Default options are marked with *
-    const response = await fetch(url, {
-        method: 'POST', // *GET, POST, PUT, DELETE, etc.
-        mode: 'cors', // no-cors, *cors, same-origin
-        cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
-        credentials: 'same-origin', // include, *same-origin, omit
-        headers: {
-            'Content-Type': 'application/json'
-            // 'Content-Type': 'application/x-www-form-urlencoded',
-        },
-        redirect: 'follow', // manual, *follow, error
-        referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
-        body: JSON.stringify(data) // body data type must match "Content-Type" header
-    });
+    const response = await fetch(url,fetch_init);
     return response.json(); // parses JSON response into native JavaScript objects
 }
 
 async function run() {
+    
+    document.writeln("<h1>Import started</h1>")
+    document.writeln("<ul style='overflow: hidden'>")
+
+    
     for (const dataKey in data) {
-        postData(url, data[dataKey])
+        const response = await postData(url, data[dataKey])
+        
+        if (typeof response.code === 'undefined')
+        {
+            document.writeln(`<li style="color:darkgreen">${response.prompt_text} update OK</li>`)
+        }else
+        {
+            document.writeln(`<li style="color:darkred">${response.prompt_text} update ERROR</li>`)
+        }
+        
+        
         await delay(100);
     }
 
+    document.writeln("</ul>")
+
+    document.writeln("<h1>Import ended</h1>")
 }
 
 run();

@@ -177,7 +177,8 @@ export default {
         
         return {
             prompt: data.items[0].prompt_text,
-            id: data.items[0].id
+            id: data.items[0].id,
+            helpers: data.items[0].example_images.prompt_helper,
         }
         
         

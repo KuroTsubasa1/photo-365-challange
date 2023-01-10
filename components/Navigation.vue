@@ -29,13 +29,8 @@
   </header>
 </template>
 
-<script>
-import AlertComponent from "~/components/AlertComponent.vue";
+<script setup>
 
-export default {
-  name: "Navigation",
-  components: {AlertComponent}
-}
 </script>
 
 <style scoped>
