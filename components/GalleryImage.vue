@@ -1,7 +1,7 @@
 0
 <template>
 
-  <div class="bo image-cell d-flex flex-column  text-dark">
+  <div class="bo image-cell d-flex flex-column  text-dark" :id="image.id">
     <h6>
       {{ image.name }}
     </h6>

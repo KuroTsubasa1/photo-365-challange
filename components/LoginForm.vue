@@ -8,6 +8,7 @@
       <span> Email </span>
       <input
           v-model="username"
+          v-on:keyup.enter="tryLogin"
           class="form-control text-white"
           type="text"
           name=""
@@ -19,6 +20,7 @@
       <span> Password </span>
       <input
           v-model="password"
+          v-on:keyup.enter="tryLogin"
           class="form-control text-white"
           type="password"
           name=""
@@ -33,6 +35,7 @@
     <div class="flex-row mb-3">
       <input
           v-on:click="tryLogin"
+          v-on:submit="tryLogin"
           type="button"
           class="form-control btn btn-dark"
           id="inputSend"

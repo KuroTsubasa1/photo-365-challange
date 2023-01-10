@@ -27,11 +27,14 @@
       <span>Wähle ein Foto</span>
       <input
           ref="photo_file"
-          v-on:change="handleFileUpload()"
           class="form-control text-white"
           type="file"
           id="formFile"
       />
+    </div>
+
+    <div v-show="alert_show" :class="alert_style">
+      <span class="">{{alert_msg}}</span>
     </div>
 
     <div class="flex-row mb-3">
@@ -54,6 +57,9 @@ const photo_name = ref("");
 const photo_file = ref(null);
 const prompts = ref("");
 const prompt_id = ref("")
+const alert_style = ref("flex-row mb-3")
+const alert_show = ref(false)
+const alert_msg = ref("")
 
 function updatePromptId() {
   prompt_id.value = this.prompt.id
@@ -100,11 +106,8 @@ async function waitForData() {
   prompts.value = tmpArr;
 }
 
-async function handleFileUpload() {
-  console.log("selected file", photo_file.value.files);
-}
 
-function tryUpload() {
+async function tryUpload() {
   
   let formdata = new FormData()
   formdata.append("name",photo_name.value)
@@ -113,21 +116,31 @@ function tryUpload() {
   formdata.append("public",true)
   formdata.append("prompt",prompt_id.value)
   
-  /*
-  const data = {
-    name: photo_name.value,
-    photo_file:  photo_file.value.files,
-    user: localStorage.getItem("auth_id"),
-    public: true,
-    prompt: prompt_id.value,
-  };
-  */
-  
-  const response = fetch(helper.baseUrl + "/api/collections/photos/records", {
+  const response = await fetch(helper.baseUrl + "/api/collections/photos/records", {
     method: "POST",
-    
+    headers:
+        {
+          Authorization: "Bearer "+ localStorage.getItem("auth_token")
+        },
     body: formdata
   });
+
+  const json = await response.json()
+  
+  if (typeof json.code !== 'undefined')
+  {
+    alert_style.value += " text-danger"
+    alert_msg.value = json.message
+    alert_show.value = true
+  }
+  else
+  {
+    alert_style.value += " text-success"
+    alert_msg.value = "Dein Foto würde erfolgreich hochgeladen."
+    alert_show.value = true
+
+  }
+  
 }
 
 onMounted(() => {
