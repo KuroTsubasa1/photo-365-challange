@@ -109,6 +109,7 @@ export default {
 
 <style scoped>
 .wrapper {
+  margin-top: 1.5rem;
   margin-left: 3rem;
   margin-right: 3rem;
 }

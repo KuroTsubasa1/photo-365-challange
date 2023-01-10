@@ -10,15 +10,15 @@
 
   <div
       class="container d-flex flex-column flex-lg-row flex-fill text-center w-100 justify-content-center mt-5">
-    <a @click="toggleIdeas" class="btn btn-dark" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false">
+    <button @click="toggleIdeas" class="btn btn-dark" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false">
       Gib mir ein paar Ideen
-    </a>
+    </button>
   </div>
 
   <div
-      v-show="showIdeas" class="container idea-container flex-column flex-lg-row flex-fill text-center w-100 b justify-content-evenly mt-5">
+      v-show="showIdeas" class="b container idea-container flex-column flex-lg-row mt-5 justify-content-center">
     
-    <div v-for="item in prompt.helpers" class="b d-flex flex-column mb-3">
+    <div v-for="item in prompt.helpers" class="b d-flex flex-column mb-3 text-center w-100">
       <div class=" ">
         <h5>
           {{ item.title }}
@@ -71,10 +71,15 @@ export default {
 }
 
 .b {
-  /* border: #ce2127 solid 1px; */
+  /*
+  border: #ce2127 solid 1px; 
+  */
+  
+  
   padding-left: 20px;
   padding-right: 20px;
   padding-top: 20px;
+  
 }
 
 .idea-container

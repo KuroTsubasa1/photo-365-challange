@@ -1,9 +1,16 @@
 <template>
 
-  <gallery-image
-      v-for="(image,index) in images"
-      :image="image">
-  </gallery-image>
+  <main class="d-flex flex-grow-1">
+    <section class="d-flex flex-wrap justify-content-center mt-5 ms-md-5">
+
+      <gallery-image
+          v-for="(image,index) in images"
+          :image="image">
+      </gallery-image>
+    </section>
+  </main>
+
+
 
 </template>
 
@@ -12,7 +19,7 @@
 // https://pocket.lasseharm.space/api/files/1zgd4x1vh2rswl7/o86g87mo4jljc26/burg_u9piFiSrGl.png
 definePageMeta(
     {
-      layout: 'gallery-layout',
+      
     }
 );
 
