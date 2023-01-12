@@ -2223,7 +2223,6 @@ async function postData(url = '', data = {detail_text: "",}, mode = "update") {
             credentials: 'same-origin',
             headers: {
                 'Content-Type': 'application/json'
-                detail_text: "",
             },
             redirect: 'follow',
             referrerPolicy: 'no-referrer',

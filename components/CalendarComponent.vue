@@ -18,6 +18,7 @@
 <script setup>
 import {ref} from "vue";
 import {default as helper} from "../utils/userHelper";
+import CalendarCellComponent from "~/components/CalendarCellComponent.vue";
 
 const week = ref([])
 

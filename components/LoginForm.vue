@@ -8,7 +8,7 @@
       <span> Email </span>
       <input
           v-model="username"
-          v-on:keyup.enter="tryLogin"
+          v-on:keyup.enter="sendLogin"
           class="form-control text-white"
           type="text"
           name=""
@@ -20,7 +20,7 @@
       <span> Password </span>
       <input
           v-model="password"
-          v-on:keyup.enter="tryLogin"
+          v-on:keyup.enter="sendLogin"
           class="form-control text-white"
           type="password"
           name=""
@@ -29,13 +29,13 @@
     </div>
 
     <div class="flex-row mb-3 text-danger">
-      <label for="none" class="col-sm-12 col-form-label">{{ login_error }}</label>
+      <label for="none" class="col-sm-12 col-form-label">{{ loginError }}</label>
     </div>
 
     <div class="flex-row mb-3">
       <input
-          v-on:click="tryLogin"
-          v-on:submit="tryLogin"
+          v-on:click="sendLogin"
+          v-on:submit="sendLogin"
           type="button"
           class="form-control btn btn-dark"
           id="inputSend"
@@ -45,69 +45,93 @@
   </div>
 </template>
 
-<script>
-var link = "https://pocket.lasseharm.space/api/collections/users/auth-with-password";
-export default {
-  name: "LoginForm",
-  data() {
-    return {
-      username: "",
-      password: "",
-      login_error: " ",
-    };
-  },
-  methods: {
-    debug: function () {
-    },
+<script setup>
+import {useGlobalState} from '~/stores/test'
+import { useUserAuthStore } from '@/stores/userAuth'
 
-    tryLogin: function () {
-      this.login_error = " ";
+const userAuth = useUserAuthStore()
+userAuth.$reset()
+const router = useRouter()
 
-      let data = {
-        identity: this.username,
-        password: this.password,
-      };
+const username = ref("")
+const password = ref("")
+const loginError = ref("")
 
-      fetch(link, {
+const loginAuthLink = ref("https://pocket.lasseharm.space/api/collections/users/auth-with-password")
+const defaultLoginErrorMsg = ref("Deine Anmeldedaten waren leider falsch. Probiere es noch ein mal.")
+
+async function tryLogin() {
+  loginError.value = " "
+
+  let data =
+      {
+        identity: username.value,
+        password: password.value,
+      }
+
+  const response = await fetch(loginAuthLink.value,
+      {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(data),
+        body: JSON.stringify(data)
       })
-          .then((response) => response.json())
-          .then((json) => {
-            if (typeof json.code !== "undefined") {
-              switch (json.code) {
-                case 400:
-                  this.login_error =
-                      "Deine Anmeldedaten waren leider falsch. Probiere es noch ein mal.";
-                  break;
-                default:
-                  console.log("Critical error! Please contact the site administrator");
-              }
 
-              return false;
-            }
+  // check for error
+  if (typeof response.code !== 'undefined') {
+    loginError.value = defaultLoginErrorMsg.value
+    return false
+  }
 
-            console.log(json);
+  const json = await response.json()
 
-            // store token in local storage or cookie
-            // TODO refactor to service worker 
-            localStorage.setItem("auth_token", json.token);
-            localStorage.setItem("auth_email", json.record.email);
-            localStorage.setItem("auth_username", json.record.username)
-            localStorage.setItem("auth_id", json.record.id)
-            this.$router.push({name: "index"});
+  if (typeof json.code !== 'undefined') {
+    loginError.value = defaultLoginErrorMsg.value
+    return false
+  }
 
+  
+  /*
+  // add auth data to store 
+  userAuth.$patch(
+      {
+        userAuthToken: json.token,
+        userId: json.record.id,
+        userName: json.record.username,
+        userEmail: json.record.email
+      }
+  )
+  */
+  
+  localStorage.setItem("auth_token", json.token)
+  
+  userAuth.$patch(
+      {
+        token: json.token,
+        isAuthenticated: true
+      }
+  )
+  
 
-          });
-    },
-  },
-};
+  return true
+  //await this.router.push({name: "index"});
+  
+}
+
+function sendLogin()
+{
+  if (tryLogin())
+  {
+    router.push({name: 'index'})
+  }
+}
+
 </script>
 
 <style scoped>
 .card {
 }
 </style>
+
+eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjb2xsZWN0aW9uSWQiOiJfcGJfdXNlcnNfYXV0aF8iLCJleHAiOjE2NzQ3NDc0MzksImlkIjoicjF6bHhhdmppNWQ2cDNzIiwidHlwZSI6ImF1dGhSZWNvcmQifQ.075h1u415QXYWQ-gtgZbEdvC7m7s9kGfbv7u5ZHvfps

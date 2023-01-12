@@ -10,12 +10,9 @@
   </div>
 </template>
 
-<script>
-import Navigation from "~/components/Navigation.vue";
+<script setup>
 
-export default {
-  components: {Navigation},
-};
+
 </script>
 
 <style scoped></style>

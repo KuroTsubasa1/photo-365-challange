@@ -9,11 +9,20 @@
   },
   "devDependencies": {
     "@types/bootstrap": "^5.2.6",
-    "nuxt": "3.0.0"
+    "@vueuse/core": "^9.10.0",
+    "@vueuse/nuxt": "^9.10.0",
+    "nuxt": "^3.0.0"
   },
   "dependencies": {
+    "@nuxtjs/composition-api": "^0.33.1",
+    "@pinia/nuxt": "^0.4.6",
     "@popperjs/core": "^2.11.6",
     "bootstrap": "^5.2.3",
+    "pinia": "^2.0.28",
     "sass": "^1.57.1"
+  },
+  "overrides": {
+    "vue": "latest",
+    "nuxt": "^3.0.0"
   }
 }

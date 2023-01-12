@@ -6,13 +6,14 @@
 
 </template>
 
-<script>
-import LoginForm from "~/components/LoginForm.vue";
+<script setup>
+import {useUserAuthStore} from '@/stores/userAuth'
 
-export default {
-  name: "login",
-  components: {LoginForm},
-}
+definePageMeta({
+  middleware: []
+  // or middleware: 'auth'
+})
+
 </script>
 
 <style scoped>

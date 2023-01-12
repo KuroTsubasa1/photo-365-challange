@@ -12,17 +12,17 @@
       <NuxtLink class="text-decoration-none btn btn-close-white" to="/gallery">Galerie</NuxtLink>
       <NuxtLink class="text-decoration-none btn btn-close-white" to="/calendar">Kalender</NuxtLink>
       <NuxtLink class="text-decoration-none btn btn-close-white" to="/upload-image">Foto hochladen</NuxtLink>
-      <NuxtLink class="text-decoration-none btn btn-close-white" to="/login">Login</NuxtLink>
+      <NuxtLink v-show="!userAuth.isAuthenticated" class="text-decoration-none btn btn-close-white" to="/login">Login</NuxtLink>
     </div>
 
 
     <div class="d-flex flex-column flex-lg-row justify-content-center justify-content-lg-end  align-content-centers">
-      <NuxtLink class="text-decoration-none  d-flex justify-content-center" to="/profile">
+      <NuxtLink v-show="userAuth.isAuthenticated" class="text-decoration-none  d-flex justify-content-center" to="/profile">
         <div class="profile ">
           
         </div>
       </NuxtLink>
-      <div class="text-decoration-none btn btn-close-white" to="/profile">Menu Button</div>
+      <div class="text-decoration-none btn btn-close-white"  to="/profile">Menu Button</div>
     </div>
 
   </div>
@@ -30,6 +30,10 @@
 </template>
 
 <script setup>
+import {useUserAuthStore} from "~/stores/userAuth";
+const userAuth = useUserAuthStore()
+
+console.log(userAuth.isAuthenticated)
 
 </script>
 
