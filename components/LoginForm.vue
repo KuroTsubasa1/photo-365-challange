@@ -46,9 +46,7 @@
 </template>
 
 <script setup>
-import {useGlobalState} from '~/stores/test'
 import { useUserAuthStore } from '@/stores/userAuth'
-
 const userAuth = useUserAuthStore()
 userAuth.$reset()
 const router = useRouter()

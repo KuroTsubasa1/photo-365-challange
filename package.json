@@ -20,7 +20,8 @@
     "@popperjs/core": "^2.11.6",
     "bootstrap": "^5.2.3",
     "pinia": "^2.0.28",
-    "sass": "^1.57.1"
+    "sass": "^1.57.1",
+    "vue-router": "^4.1.6"
   },
   "overrides": {
     "vue": "latest",
