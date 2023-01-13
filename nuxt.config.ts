@@ -1,5 +1,6 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
+    ssr: false,
     app:
         {
             head: {
@@ -12,6 +13,7 @@ export default defineNuxtConfig({
         },
     css: ['~/assets/styles/main.scss'],
     modules: [
+        ['nuxt-icon'],
         [
             '@pinia/nuxt',
             {
@@ -23,6 +25,7 @@ export default defineNuxtConfig({
                 ],
             },
         ],
+       
     ],
 
 })

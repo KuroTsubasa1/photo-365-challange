@@ -78,8 +78,6 @@ export default {
   border-radius: 5px;
   background-color: #FFF;
   padding: 20px;
-  /* border: #212121 solid 2px; */
-
 }
 
 .image-cell {

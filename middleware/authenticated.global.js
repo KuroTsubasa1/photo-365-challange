@@ -2,12 +2,9 @@
 import {useUserAuthStore} from '@/stores/userAuth'
 
 export default defineNuxtRouteMiddleware(async (to, from) => {
-
-
+    
     const userAuth = useUserAuthStore()
-
-    console.log("in middleware auth")
-
+    
     if (['/login', '/prompt-of-the-day', '/'].includes(to.path)) return
     if (['/login'].includes(to.path) && userAuth.isAuthenticated) return navigateTo("/")
     if (userAuth.isAuthenticated) return
@@ -27,8 +24,7 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
     return navigateTo(to.path)
 
     async function getNewAuthToken() {
-
-        console.log("token: " + userAuth.token)
+        
         if (userAuth.token === false) {
             return false
         }

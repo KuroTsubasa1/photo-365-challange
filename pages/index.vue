@@ -8,7 +8,8 @@
 
         <section class="col-12">
           <h1>
-            Wilkommen zur 365 Photo Challange 📷
+            Wilkommen zur 365 Photo Challange <Icon name="ic:round-photo-camera" />
+
           </h1>
         </section>
 

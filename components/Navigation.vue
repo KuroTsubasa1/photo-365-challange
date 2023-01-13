@@ -3,26 +3,43 @@
   <div class="d-flex flex-column flex-lg-row bg-dark pt-3 pb-2 ">
 
     <div class="d-flex flex-column flex-lg-row justify-content-start">
-      <NuxtLink class=" fake-h5 text-decoration-none btn btn-close-white" to="/">365 Photo Challange 📷</NuxtLink>
+      <NuxtLink class=" fake-h5 text-decoration-none btn btn-close-white" to="/">365 Photo Challange
+        <Icon name="ic:round-photo-camera" size="1.5em"/>
+      </NuxtLink>
     </div>
 
 
     <div class="d-flex flex-fill flex-column flex-lg-row justify-content-md-start justify-content-center">
-      <NuxtLink class="text-decoration-none btn btn-close-white" to="/prompt-of-the-day">Challange des Tages</NuxtLink>
-      <NuxtLink class="text-decoration-none btn btn-close-white" to="/gallery">Galerie</NuxtLink>
-      <NuxtLink class="text-decoration-none btn btn-close-white" to="/calendar">Kalender</NuxtLink>
-      <NuxtLink class="text-decoration-none btn btn-close-white" to="/upload-image">Foto hochladen</NuxtLink>
-      <NuxtLink v-show="!userAuth.isAuthenticated" class="text-decoration-none btn btn-close-white" to="/login">Login</NuxtLink>
+      <NuxtLink class="text-decoration-none btn btn-close-white nav-link-lh" to="/prompt-of-the-day">
+        <Icon class="me-2" name="material-symbols:swords" size="1.25em"/>
+        Challange des Tages
+      </NuxtLink>
+      <NuxtLink class="text-decoration-none btn btn-close-white" to="/gallery">
+        <Icon class="me-2" name="material-symbols:image-search" size="1.25em"/>
+        Galerie
+      </NuxtLink>
+      <NuxtLink class="text-decoration-none btn btn-close-white" to="/calendar">
+        <Icon class="me-2" name="material-symbols:calendar-month" size="1.25em"/>
+        Kalender
+      </NuxtLink>
+      <NuxtLink class="text-decoration-none btn btn-close-white" to="/upload-image">
+        <Icon class="me-2" name="material-symbols:upload-file" size="1.25em"/>
+        Foto hochladen
+      </NuxtLink>
     </div>
 
 
     <div class="d-flex flex-column flex-lg-row justify-content-center justify-content-lg-end  align-content-centers">
-      <NuxtLink v-show="userAuth.isAuthenticated" class="text-decoration-none  d-flex justify-content-center" to="/profile">
-        <div class="profile ">
-          
+      <NuxtLink v-show="userAuth.isAuthenticated"  class="text-decoration-none d-flex justify-content-center"
+                to="/profile">
+        <div  v-show="userAuth.isAuthenticated" class="profile ">
         </div>
       </NuxtLink>
-      <div class="text-decoration-none btn btn-close-white"  to="/profile">Menu Button</div>
+      <NuxtLink v-show="!userAuth.isAuthenticated" class="text-decoration-none btn btn-close-white" to="/login">
+        <Icon class="me-2" name="material-symbols:login" size="1.25em"/>
+        Login
+      </NuxtLink>
+      <div class="text-decoration-none btn btn-close-white" to="/profile">Menu Button</div>
     </div>
 
   </div>
@@ -32,9 +49,8 @@
 <script setup>
 import {useUserAuthStore} from "~/stores/userAuth";
 const userAuth = useUserAuthStore()
-
+console.log("In nav element")
 console.log(userAuth.isAuthenticated)
-
 </script>
 
 <style scoped>
@@ -47,8 +63,7 @@ console.log(userAuth.isAuthenticated)
   line-height: 1.3rem;
 }
 
-.profile
-{
+.profile {
   margin-top: 7px;
   width: 25px;
   height: 25px;
@@ -56,11 +71,9 @@ console.log(userAuth.isAuthenticated)
   background-color: #ce2127;
 }
 
-.profile:hover
-{
+.profile:hover {
   background-color: #5e1113;
 }
-
 
 
 .nav-link {
