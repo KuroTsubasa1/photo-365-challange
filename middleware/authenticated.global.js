@@ -4,10 +4,17 @@ import {useUserAuthStore} from '@/stores/userAuth'
 export default defineNuxtRouteMiddleware(async (to, from) => {
     
     const userAuth = useUserAuthStore()
+    console.log(userAuth)
     
-    if (['/login', '/prompt-of-the-day', '/'].includes(to.path)) return
-    if (['/login'].includes(to.path) && userAuth.isAuthenticated) return navigateTo("/")
-    if (userAuth.isAuthenticated) return
+    if (checkLoginStatus())
+    {
+        processIsLoggedIn()
+    }
+    else
+    {
+        processIsNotLoggedIn()
+    }
+   
 
     const tokenUrl = "https://pocket.lasseharm.space/api/collections/users/auth-refresh"
 
@@ -54,6 +61,23 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
 
         return true
 
+    }
+    
+    async function processIsLoggedIn()
+    {
+        
+    }
+    
+    async function processIsNotLoggedIn()
+    {
+        
+    }
+    
+    function checkLoginStatus()
+    {
+        if (userAuth.isAuthenticated) return
+        if (['/login', '/prompt-of-the-day', '/'].includes(to.path) && !userAuth.isAuthenticated) return
+        if (['/login'].includes(to.path) && userAuth.isAuthenticated) return navigateTo("/")
     }
 })
 

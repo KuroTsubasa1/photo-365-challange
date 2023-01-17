@@ -29,7 +29,7 @@
     </div>
 
 
-    <div class="d-flex flex-column flex-lg-row justify-content-center justify-content-lg-end  align-content-centers">
+    <div class="d-flex flex-column flex-lg-row justify-content-center justify-content-lg-end  align-content-center">
       <NuxtLink v-show="userAuth.isAuthenticated"  class="text-decoration-none d-flex justify-content-center"
                 to="/profile">
         <div  v-show="userAuth.isAuthenticated" class="profile ">
@@ -39,7 +39,8 @@
         <Icon class="me-2" name="material-symbols:login" size="1.25em"/>
         Login
       </NuxtLink>
-      <div class="text-decoration-none btn btn-close-white" to="/profile">Menu Button</div>
+      
+      <div v-show="breakpoints.smallerOrEqual('md')" class="text-decoration-none btn btn-close-white" to="/profile"> <Icon class="me-2" name="material-symbols:menu" size="2em"/></div>
     </div>
 
   </div>
@@ -48,9 +49,14 @@
 
 <script setup>
 import {useUserAuthStore} from "~/stores/userAuth";
+import { breakpointsBootstrapV5, useBreakpoints } from '@vueuse/core'
+
 const userAuth = useUserAuthStore()
-console.log("In nav element")
-console.log(userAuth.isAuthenticated)
+const breakpoints = useBreakpoints(breakpointsBootstrapV5)
+
+console.log(breakpoints)
+
+
 </script>
 
 <style scoped>
