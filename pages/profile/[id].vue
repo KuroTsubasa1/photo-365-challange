@@ -2,7 +2,7 @@
   
   <div class="outer-container flex-column flex-xl-row d-flex justify-content-center">
 
-    <div class="b d-flex inner-container flex-column  justify-content-center order-xl-0 order-1">
+    <div class="b d-flex inner-container flex-column  justify-content-center order-xl-0 order-1  bg-dark d-none">
       <div class="b d-flex justify-content-center">
         Options
       </div>
@@ -14,7 +14,7 @@
       </div>
     </div>
 
-    <div class="b inner-container d-flex flex-column  justify-content-center order-0 order-xl-1">
+    <div class="b inner-container d-flex flex-column  justify-content-center order-0 order-xl-1  bg-dark">
       <div class="b d-flex justify-content-center">
         Profile
       </div>
@@ -51,7 +51,6 @@ const route = useRoute()
 const user = ref("")
 
 async function getUserData(id) {
-  // r1zlxavji5d6p3s
   user.value = await helper.getUserById(id)
 
   if (user.value.error) {
@@ -74,7 +73,7 @@ onMounted(() => {
 .b {
   padding: 10px;
   margin: 20px;
-  border: #ce2127 solid 1px;
+  /* border: #ce2127 solid 1px; */
 }
 
 .avatar {

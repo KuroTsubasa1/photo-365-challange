@@ -35,6 +35,15 @@ async function waitForData() {
 
 onMounted(() => {
   waitForData();
+
+  let curr = new Date(); // get current date
+  let first = curr.getDate() - curr.getDay() + 1;
+  console.log(curr.getDate())
+  console.log(curr.getDay())
+  console.log(curr.getDay() + 1)
+  console.log(first)
+  console.log(curr.getDate() - curr.getDay())
+
 });
 </script>
 

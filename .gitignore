@@ -3,9 +3,10 @@
 .nuxt
 # Node dependencies
 node_modules/*
-*/node_modules/*
 # System files
 *.log
 .idea
 .vscode
 sw.*
+/.nuxt/
+/node_modules/
