@@ -11,14 +11,14 @@ export default defineNuxtConfig({
                 ],
             },
         },
-    pwa: {
+    /*pwa: {
         workbox: {
             enabled: true
         }
-    },
+    },*/
     css: ['~/assets/styles/main.scss'],
     modules: [
-        ['@kevinmarrec/nuxt-pwa'],
+        /*['@kevinmarrec/nuxt-pwa'],*/
         ['nuxt-icon'],
         [
             '@pinia/nuxt',
