@@ -14,15 +14,15 @@
         <Icon class="me-2" name="material-symbols:swords" size="1.25em"/>
         Challange des Tages
       </NuxtLink>
-      <NuxtLink class="text-decoration-none btn btn-close-white" to="/gallery">
+      <NuxtLink v-show="userAuth.isAuthenticated" class="text-decoration-none btn btn-close-white" to="/gallery">
         <Icon class="me-2" name="material-symbols:image-search" size="1.25em"/>
         Galerie
       </NuxtLink>
-      <NuxtLink class="text-decoration-none btn btn-close-white" to="/calendar">
+      <NuxtLink v-show="userAuth.isAuthenticated" class="text-decoration-none btn btn-close-white" to="/calendar">
         <Icon class="me-2" name="material-symbols:calendar-month" size="1.25em"/>
         Kalender
       </NuxtLink>
-      <NuxtLink class="text-decoration-none btn btn-close-white" to="/upload-image">
+      <NuxtLink v-show="userAuth.isAuthenticated" class="text-decoration-none btn btn-close-white" to="/upload-image">
         <Icon class="me-2" name="material-symbols:upload-file" size="1.25em"/>
         Foto hochladen
       </NuxtLink>
@@ -31,7 +31,7 @@
 
     <div class="d-flex flex-column flex-lg-row justify-content-center justify-content-lg-end  align-content-center">
       <NuxtLink v-show="userAuth.isAuthenticated"  class="text-decoration-none d-flex justify-content-center"
-                to="/profile">
+                :to="{ path: userProfileLink }">
         <div  v-show="userAuth.isAuthenticated" class="profile ">
         </div>
       </NuxtLink>
@@ -40,7 +40,7 @@
         Login
       </NuxtLink>
       
-      <div v-show="breakpoints.smallerOrEqual('md')" class="text-decoration-none btn btn-close-white" to="/profile"> <Icon class="me-2" name="material-symbols:menu" size="2em"/></div>
+      <div v-show="breakpoints.smallerOrEqual('md')" class="text-decoration-none btn btn-close-white" to=""> <Icon class="me-2" name="material-symbols:menu" size="2em"/></div>
     </div>
 
   </div>
@@ -53,6 +53,9 @@ import { breakpointsBootstrapV5, useBreakpoints } from '@vueuse/core'
 
 const userAuth = useUserAuthStore()
 const breakpoints = useBreakpoints(breakpointsBootstrapV5)
+
+const userProfileLink = `/profile/${userAuth.id}`
+
 
 console.log(breakpoints)
 

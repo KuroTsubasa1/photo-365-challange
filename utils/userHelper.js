@@ -74,6 +74,7 @@ export default {
     getCurrentCalendarWeek: function (date) {
         const maxDays = 7;
         let weekObj = {};
+        
         // check if date is set else get current week
         if (typeof date !== "undefined") {
         }
