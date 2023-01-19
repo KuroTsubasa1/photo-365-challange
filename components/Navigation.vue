@@ -40,6 +40,9 @@
         Login
       </NuxtLink>
       
+      <AddToHomeScreen>
+        Test
+      </AddToHomeScreen>
       <div v-show="breakpoints.smallerOrEqual('md')" class="text-decoration-none btn btn-close-white" to=""> <Icon class="me-2" name="material-symbols:menu" size="2em"/></div>
     </div>
 
