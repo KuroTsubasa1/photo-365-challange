@@ -3,11 +3,8 @@ import {useUserAuthStore} from '@/stores/userAuth'
 
 export default defineNuxtRouteMiddleware(async (to, from) => {
 
-    // skip until rework is finished
-    //return
-
     const userAuth = useUserAuthStore()
-    const loginUrl  = '/login'
+    const loginUrl = '/login'
     const rootUrl = '/'
     const promptUrl = '/prompt-of-the-day'
     const tokenUrl = "https://pocket.lasseharm.space/api/collections/users/auth-refresh"
@@ -20,42 +17,37 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
 
     // log user in
     // redirect to requested page
-    if (tokenStatus && isAuthenticatedStatus)
-    {
-        if ([loginUrl].includes(to.path)) navigateTo(rootUrl)
-        return navigateTo(to.path)
+    if (tokenStatus && isAuthenticatedStatus) {
+        if ([loginUrl].includes(to.path)) return navigateTo(rootUrl)
+        return
     }
 
     // check if token is still valid
     // if it is log user in
     // else redirect to login
-    if (tokenStatus && !isAuthenticatedStatus)
-    {
+    if (tokenStatus && !isAuthenticatedStatus) {
         const status = await getNewAuthToken()
         if (!status) return navigateTo(loginUrl)
-        if  (to.path === loginUrl) return navigateTo(rootUrl)
-
+        if (to.path === loginUrl) return navigateTo(rootUrl)
         return
     }
 
     // this should not be possible
     // you can not be logged in without any token
-    if  (!tokenStatus && isAuthenticatedStatus)
-    {
+    if (!tokenStatus && isAuthenticatedStatus) {
         console.error("ERROR: 666 | This can not be !")
         return navigateTo(loginUrl)
     }
 
-    if ([rootUrl,promptUrl].includes(to.path)) return
+    if ([rootUrl, promptUrl].includes(to.path)) return
 
     // this user has to authenticate
-    if  (!tokenStatus && !isAuthenticatedStatus)
-    {
+    if (!tokenStatus && !isAuthenticatedStatus) {
         return navigateTo(loginUrl)
     }
-
+    
     async function getNewAuthToken() {
-        
+
         if (userAuth.token === false) {
             return false
         }
@@ -87,13 +79,11 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
 
     }
 
-    function getTokenStatus()
-    {
+    function getTokenStatus() {
         return !!userAuth.token;
     }
 
-    function getIsAuthenticatedStatus()
-    {
+    function getIsAuthenticatedStatus() {
         return !!userAuth.isAuthenticated;
     }
 })

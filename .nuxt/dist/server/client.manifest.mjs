@@ -6,10 +6,10 @@ export default {
     "module": true,
     "resourceType": "script"
   },
-  "/home/lharm/photo-365-challange/node_modules/nuxt/dist/app/entry.mjs": {
+  "C:/Users/lharm/Documents/photo-365-challange/node_modules/nuxt/dist/app/entry.mjs": {
     "resourceType": "script",
     "module": true,
     "isEntry": true,
-    "file": "/home/lharm/photo-365-challange/node_modules/nuxt/dist/app/entry.mjs"
+    "file": "C:/Users/lharm/Documents/photo-365-challange/node_modules/nuxt/dist/app/entry.mjs"
   }
 }
