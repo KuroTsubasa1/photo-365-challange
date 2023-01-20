@@ -106,14 +106,18 @@ async function tryLogin() {
   
   userAuth.$patch(
       {
+        firstRequest: false,
         token: json.token,
-        isAuthenticated: true
+        isAuthenticated: true,
+        id: json.record.id,
+        email : json.record.email,
+        username: json.record.username,
+        collection: json.record.collectionId,
+        avatar: json.record.avatar
       }
   )
   
-
   return true
-  //await this.router.push({name: "index"});
   
 }
 
@@ -131,5 +135,3 @@ function sendLogin()
 .card {
 }
 </style>
-
-eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjb2xsZWN0aW9uSWQiOiJfcGJfdXNlcnNfYXV0aF8iLCJleHAiOjE2NzQ3NDc0MzksImlkIjoicjF6bHhhdmppNWQ2cDNzIiwidHlwZSI6ImF1dGhSZWNvcmQifQ.075h1u415QXYWQ-gtgZbEdvC7m7s9kGfbv7u5ZHvfps

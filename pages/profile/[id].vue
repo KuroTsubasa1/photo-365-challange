@@ -24,14 +24,14 @@
         </div>
       </div>
       <div class="b d-flex justify-content-center">
-        Benutzername: {{ user.username }}
+        Benutzername: {{ userAuth.username }}
       </div>
       <div class="b d-flex justify-content-center">
-        Name: {{ user.name }}
+      <!--  Name: {{ userAuth.name }} -->
       </div>
 
       <div class="b d-flex justify-content-center">
-     <button class="w-100 btn btn-dark">
+     <button @click="helper.logoutUser()" class="w-100 btn btn-dark">
         Ausloggen
      </button>
       </div>
@@ -46,27 +46,11 @@
 <script setup>
 import {ref} from "vue";
 import {default as helper} from "../../utils/userHelper"
-
-const route = useRoute()
+import { useUserAuthStore } from '@/stores/userAuth'
+const userAuth = await useUserAuthStore()
 const user = ref("")
 
-async function getUserData(id) {
-  user.value = await helper.getUserById(id)
-
-  if (user.value.error) {
-    return navigateTo("/login")
-  }
-}
-
-const style_attr = computed(() => {
-  return "background-image:url('" + helper.baseUrl + helper.apiUrl + user.value.collectionId + '/' + user.value.id + '/' + user.value.avatar + "')"
-})
-
-onMounted(() => {
-  getUserData(route.params.id);
-  //getUserData("r1zlxavji5d6p3s");
-});
-
+const style_attr =  "background-image:url('" + helper.baseUrl + helper.apiUrl + userAuth.collection + '/' + userAuth.id + '/' + userAuth.avatar + "')"
 </script>
 
 <style scoped>

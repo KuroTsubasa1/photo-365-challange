@@ -11,9 +11,6 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
 
     const tokenStatus = getTokenStatus()
     const isAuthenticatedStatus = getIsAuthenticatedStatus()
-
-    console.log(tokenStatus)
-    console.log(isAuthenticatedStatus)
     
     // catch redirect infinite loop
     if ([loginUrl].includes(to.path)) return
@@ -21,11 +18,16 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
     // log user in
     // redirect to requested page
     if (tokenStatus && isAuthenticatedStatus) {
+       
+            
+            const status = await getNewAuthToken()
+            if (!status) return navigateTo(loginUrl)
+            if ([loginUrl].includes(to.path)) return navigateTo(rootUrl)
+        
+        
         if ([loginUrl].includes(to.path)) return navigateTo(rootUrl)
         return
     }
-
-   
     
     // check if token is still valid
     // if it is log user in
@@ -79,11 +81,12 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
                 isAuthenticated: true,
                 id: data.record.id,
                 email : data.record.email,
-                username: data.record.username
+                username: data.record.username,
+                collection: data.record.collectionId,
+                avatar: data.record.avatar
             })
 
         localStorage.setItem("auth_token", data.token)
-
         return true
 
     }

@@ -4,11 +4,14 @@ import { useLocalStorage } from '@vueuse/core'
 
 export const useUserAuthStore = defineStore('userAuth', {
     state: () => ({
+        firstRequest: true,
         token: useLocalStorage('auth_token', null),
         username: null,
         id: null,
         email: null,
         isAuthenticated : false,
+        collection: '',
+        avatar: '',
     }),
     getters: {
     },

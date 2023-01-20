@@ -1,3 +1,6 @@
+import {useUserAuthStore} from "~/stores/userAuth";
+const router = useRouter()
+const userAuth = useUserAuthStore()
 export default {
     baseUrl: "https://pocket.lasseharm.space",
     apiUrl : "/api/files/",
@@ -8,6 +11,13 @@ export default {
 
     promptErrorText: "There is no prompt of the day 😭",
     userErrorText: "No user found!",
+    
+    logoutUser: function ()
+    {
+        localStorage.removeItem("auth_token")
+        userAuth.$reset()
+        router.push(this.baseUrl)
+    },
     
     dateToIso8601Format: function (date)
     {
@@ -74,7 +84,6 @@ export default {
     getCurrentCalendarWeek: function (date) {
         const maxDays = 7;
         let weekObj = {};
-        
         // check if date is set else get current week
         if (typeof date !== "undefined") {
         }
