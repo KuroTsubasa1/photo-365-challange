@@ -7,6 +7,7 @@
         <slot></slot>
       </div>
     </main>
+    <StickyBottomAlert></StickyBottomAlert>
   </div>
 </template>
 
