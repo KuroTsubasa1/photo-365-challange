@@ -3,10 +3,10 @@
     <button
         v-if="deferredPrompt"
         ref="addBtn"
-        class="add-button"
+        class="add-button btn btn-dark"
         @click="clickCallback"
     >
-      Add
+      Zum Startbildschirm hinzufügen
     </button>
   </div>
 </template>
@@ -21,6 +21,7 @@ export default {
   }),
   mounted() {
     this.captureEvent()
+    console.log( this.deferredPrompt)
   },
   methods: {
     captureEvent() {

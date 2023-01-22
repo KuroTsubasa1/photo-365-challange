@@ -1,6 +1,6 @@
 <template>
 
-  <div class="flex flex-column mt-5 w-[1000px]">
+  <div class="flex flex-column mt-5 w-[1000px] mb-5">
 
     <div class="flex flex-row mb-3 justify-center">
       <h1>
