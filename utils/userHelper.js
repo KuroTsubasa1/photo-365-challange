@@ -11,7 +11,29 @@ export default {
 
     promptErrorText: "There is no prompt of the day 😭",
     userErrorText: "No user found!",
-    
+
+    getDates: function ()
+    {
+        const date = new Date();
+        const currentYear = date.getFullYear();
+        const currentMonth = date.getMonth();
+        const currentDay = date.getDate();
+        let dates = {};
+
+        for (let i = 0; i <= currentMonth; i++) {
+            for (let j = 1; j <= new Date(currentYear, i + 1, 0).getDate(); j++) {
+                if (i === currentMonth && j > currentDay) {
+                    break;
+                }
+                const currentDate = new Date(currentYear, i, j);
+                // const dateString = currentDate.toISOString().slice(0, 10);
+                const dateString = currentDate.getDate() + '.' + currentDate.getMonth() + 1
+                dates[dateString] = dateString;
+            }
+        }
+        return dates;
+    },
+
     logoutUser: function ()
     {
         localStorage.removeItem("auth_token")

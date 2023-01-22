@@ -5,6 +5,7 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
 
     const userAuth = useUserAuthStore()
     const loginUrl = '/login'
+    const listUrl = '/list'
     const rootUrl = '/'
     const promptUrl = '/prompt-of-the-day'
     const tokenUrl = "https://pocket.lasseharm.space/api/collections/users/auth-refresh"
@@ -34,7 +35,7 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
     // else redirect to login
     if (tokenStatus && !isAuthenticatedStatus) {
         const status = await getNewAuthToken()
-        if ([rootUrl, promptUrl].includes(to.path)) return
+        if ([rootUrl, promptUrl, listUrl].includes(to.path)) return
         if (!status) return navigateTo(loginUrl)
         if (to.path === loginUrl) return navigateTo(rootUrl)
         return
@@ -47,7 +48,7 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
         return navigateTo(loginUrl)
     }
 
-    if ([rootUrl, promptUrl].includes(to.path)) return
+    if ([rootUrl, promptUrl, listUrl].includes(to.path)) return
     
     // this user has to authenticate
     if (!tokenStatus && !isAuthenticatedStatus) {
