@@ -26,8 +26,6 @@ async function aggregateData()
 {
   const dates = helper.getDates()
 
-  console.log(dates)
-
   let i = 1;
 
   const result = []
@@ -35,11 +33,15 @@ async function aggregateData()
   for (const datesKey in dates) {
     let tmpDate = {}
 
-    const prompt = await helper.getPromptOfTheDay(helper.fillDateWithZeros(datesKey).day)
+    const datesKeySplit = datesKey.split('.')
+
+    const zeroFilledDate = helper.fillDateWithZeros(datesKeySplit[0],datesKeySplit[1])
+
+    const prompt = await helper.getPromptOfTheDay(`${zeroFilledDate.day}.${zeroFilledDate.month}`)
 
     tmpDate.date = helper.fillDateWithZeros(datesKey).day
     tmpDate.prompt = prompt.prompt
-    tmpDate.number =  i++
+    tmpDate.number =  (i++).toString()
 
     result.push(tmpDate)
   }
@@ -47,9 +49,6 @@ async function aggregateData()
 }
 
 const dates =  await aggregateData()
-
-console.log(dates)
-
 
 </script>
 

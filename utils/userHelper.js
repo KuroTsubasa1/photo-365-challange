@@ -1,19 +1,19 @@
 import {useUserAuthStore} from "~/stores/userAuth";
+
 const router = useRouter()
 const userAuth = useUserAuthStore()
 export default {
     baseUrl: "https://pocket.lasseharm.space",
-    apiUrl : "/api/files/",
+    apiUrl: "/api/files/",
     verifyUserUrl: "/api/collections/users/confirm-verification",
     promptUrl: "/api/collections/prompts/records",
     getUserUrl: "/api/collections/users/records",
-    errorPromptId:  -1,
+    errorPromptId: -1,
 
     promptErrorText: "There is no prompt of the day 😭",
     userErrorText: "No user found!",
 
-    getDates: function ()
-    {
+    getDates: function () {
         const date = new Date();
         const currentYear = date.getFullYear();
         const currentMonth = date.getMonth();
@@ -26,35 +26,32 @@ export default {
                     break;
                 }
                 const currentDate = new Date(currentYear, i, j);
-                // const dateString = currentDate.toISOString().slice(0, 10);
-                const dateString = currentDate.getDate() + '.' + currentDate.getMonth() + 1
+                const dateString = currentDate.getDate() + '.' + (currentDate.getMonth() + 1)
                 dates[dateString] = dateString;
             }
         }
         return dates;
     },
 
-    logoutUser: function ()
-    {
+    logoutUser: function () {
         localStorage.removeItem("auth_token")
         userAuth.$reset()
         router.push(this.baseUrl)
     },
-    
-    dateToIso8601Format: function (date)
-    {
+
+    dateToIso8601Format: function (date) {
         // supported format YYYY-MM-DDTHH:mm:ss.sssZ
         const dateParts = date.split('.')
-        
+
         const year = new Date().getFullYear()
-        
+
         return `${year}-${dateParts[1]}-${dateParts[0]}:00:00:00`
     },
-    
-    getPromptById: async function(id) {
+
+    getPromptById: async function (id) {
 
         const filter = `?filter=(id='${id}')`
-        const response = await fetch( this.baseUrl+this.promptUrl+filter,)
+        const response = await fetch(this.baseUrl + this.promptUrl + filter,)
 
         if (response.status !== 200) {
             return {
@@ -71,20 +68,20 @@ export default {
         }
         return data.items[0]
     },
-    
-    getUserById: async function(id) {
-        
+
+    getUserById: async function (id) {
+
         const filter = `?filter=(id='${id}')`
-        const response = await fetch( this.baseUrl+this.getUserUrl+filter,)
+        const response = await fetch(this.baseUrl + this.getUserUrl + filter,)
 
         if (response.status !== 200) {
             return {
                 error: this.userErrorText
             }
         }
-        
+
         let data = await response.json()
-        
+
         if (data.items.length !== 1) {
             return {
                 error: this.userErrorText
@@ -193,7 +190,7 @@ export default {
 
         if (response.status !== 200) {
             return {
-                prompt:  this.promptErrorText,
+                prompt: this.promptErrorText,
                 id: this.errorPromptId,
             }
         }
@@ -202,24 +199,23 @@ export default {
 
         if (data.items.length !== 1) {
             return {
-                prompt:  this.promptErrorText,
+                prompt: this.promptErrorText,
                 id: this.errorPromptId,
             }
         }
-        
-        if ( typeof  data.items[0].example_images === 'undefined' ||  data.items[0].example_images === null || typeof data.items[0].example_images.prompt_helper === 'undefined' )
-        {
+
+        if (typeof data.items[0].example_images === 'undefined' || data.items[0].example_images === null || typeof data.items[0].example_images.prompt_helper === 'undefined') {
             data.items[0].example_images = {
-                prompt_helper : [],
+                prompt_helper: [],
             }
         }
-        
+
         return {
             prompt: data.items[0].prompt_text,
             id: data.items[0].id,
             helpers: data.items[0].example_images.prompt_helper,
         }
-        
-        
+
+
     },
 };
