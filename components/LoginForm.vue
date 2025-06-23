@@ -121,9 +121,9 @@ async function tryLogin() {
   
 }
 
-function sendLogin()
+async function sendLogin()
 {
-  if (tryLogin())
+  if (await tryLogin())
   {
     router.push({name: 'index'})
   }
