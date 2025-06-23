@@ -15,7 +15,7 @@
     </div>
 
     <div class="flex-row mb-3">
-      <span> Challange des Tages </span>
+      <span> Challenge des Tages </span>
       <select class="form-select" aria-label="Default select example">
         <option v-for="(prompt, index) in prompts" :selected="prompt.selected" :id="prompt.id" @change="updatePromptId">
           {{ prompt.prompt }}

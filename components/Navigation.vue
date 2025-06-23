@@ -3,7 +3,7 @@
   <div class="d-flex flex-column flex-lg-row bg-dark pt-3 pb-2 ">
 
     <div class="d-flex flex-row justify-content-lg-start justify-content-center">
-      <NuxtLink class="fake-h5 text-decoration-none btn btn-close-white  flex-fill" to="/">365 Photo Challange
+      <NuxtLink class="fake-h5 text-decoration-none btn btn-close-white  flex-fill" to="/">365 Photo Challenge
         <Icon name="ic:round-photo-camera" size="1.5em"/>
       </NuxtLink>
 
@@ -17,7 +17,7 @@
       <div class="d-flex flex-fill flex-column flex-lg-row justify-content-md-start justify-content-center">
         <NuxtLink class="text-decoration-none btn btn-close-white nav-link-lh" to="/prompt-of-the-day">
           <Icon class="me-2" name="material-symbols:swords" size="1.25em"/>
-          Challange des Tages
+          Challenge des Tages
         </NuxtLink>
         <NuxtLink v-show="userAuth.isAuthenticated" class="text-decoration-none btn btn-close-white" to="/gallery">
           <Icon class="me-2" name="material-symbols:image-search" size="1.25em"/>
