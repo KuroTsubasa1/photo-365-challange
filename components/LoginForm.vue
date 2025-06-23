@@ -77,7 +77,7 @@ async function tryLogin() {
       })
 
   // check for error
-  if (typeof response.code !== 'undefined') {
+  if (!response.ok) {
     loginError.value = defaultLoginErrorMsg.value
     return false
   }
